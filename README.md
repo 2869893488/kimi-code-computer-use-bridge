@@ -1,5 +1,9 @@
 # Kimi Code Computer Use Bridge
 
+一个让「官方 KimiCU 的电脑操作能力」能在其他 AI 客户端里复用的社区转接器。官方 KimiCU 以 Kimi Code 原生插件的形式提供桌面控制（computer use）能力，让模型可以读取屏幕、激活窗口、接管键鼠；如果想在 Antigravity、WorkBuddy 或 Claude Desktop 里用上同一套能力，就需要把本机已安装的官方 payload 接到这些宿主的 MCP 配置中。本仓库把官方 payload 按哈希锁定并安装到 `%LOCALAPPDATA%\KimiCU-Community`，再把名为 `kimi-cu` 的 stdio MCP server 合并进宿主配置文件；宿主重启后即可加载 `js`、`js_reset`、`js_add_node_module_dir` 等工具。Codex 使用 TOML，需按[宿主接入指南](docs/HOST_INTEGRATION_GUIDE.md)手动添加。
+
+本仓库**不下载、不分发**任何官方运行时、EXE、ZIP 或插件源码，官方组件需由你自行从官方渠道获取，见[获取官方组件](#获取官方组件)；脚本只做校验、事务化安装（`-DryRun` / `-Doctor` / 回滚 / 卸载）和「写入前备份 + 原子替换」的配置合并，并明确拒绝写入官方 managed 插件目录；目前仅面向 Windows 10/11 x64 的交互式桌面，仍处于预览阶段，各宿主的验证程度以[支持矩阵](docs/SUPPORT_MATRIX.md)为准。
+
 > 预览版本 `0.1.0-preview.1`：接口和安装流程可能变化。
 
 非官方社区项目，与 Moonshot AI、Kimi、Google Antigravity、Anthropic、OpenAI 不存在隶属、授权或背书关系。
@@ -84,11 +88,11 @@ npm test
 
 ## 文档
 
-- 安装、升级、回滚、卸载：[docs/INSTALL_UPGRADE_ROLLBACK.md](docs/INSTALL_UPGRADE_ROLLBACK.md)
-- 支持矩阵：[docs/SUPPORT_MATRIX.md](docs/SUPPORT_MATRIX.md)
-- 已知限制：[docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md)
+- 安装、升级、回滚、卸载：[docs/INSTALL\_UPGRADE\_ROLLBACK.md](docs/INSTALL_UPGRADE_ROLLBACK.md)
+- 支持矩阵：[docs/SUPPORT\_MATRIX.md](docs/SUPPORT_MATRIX.md)
+- 已知限制：[docs/KNOWN\_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md)
 - 安全报告：[SECURITY.md](SECURITY.md)
-- 发布与撤回：[docs/RELEASE_PROCESS.md](docs/RELEASE_PROCESS.md)
+- 发布与撤回：[docs/RELEASE\_PROCESS.md](docs/RELEASE_PROCESS.md)
 - 变更记录：[CHANGELOG.md](CHANGELOG.md)
 - 许可证：[LICENSE](LICENSE)
 
