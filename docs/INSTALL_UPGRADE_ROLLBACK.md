@@ -4,7 +4,11 @@
 
 1. Windows 10/11 x64，已解锁的交互式桌面
 2. Node.js 24.15.0+ x64，位于 PATH
-3. 已安装官方 KimiCU payload
+3. 已取得官方 KimiCU 插件 payload（`-SourcePath` 指向的 62 个文件），二选一：
+   - 已安装 Kimi Code：使用 `%USERPROFILE%\.kimi-code\plugins\managed\kimi-cu-win`（只读引用，不要写入）。
+   - 未安装 Kimi Code：下载官方版本化包 `https://cdn.kimi.com/kimi-computer-use-windows/0.3.10/kimi-cu-win-plugin.zip` 并解压，解压前核对 ZIP 的 SHA-256 为 `aae21d2b5b8eb601f8f89b29e3ccc3ffab32db95f009a1e7e0a5409eefe4cea9`（取自官方 `0.3.10/version.json`）。
+
+   注意：官方安装脚本 `latest/setup_windows.cmd` 只安装 native runtime（`%LOCALAPPDATA%\KimiCU`），不会产出此 payload；runtime 仍是运行前提。仓库清单固定 0.3.10，`latest` 已更新到 0.3.13 且 8 个文件哈希不同，直接用最新版会在校验处中止。
 4. 与 payload 版本匹配的 `payload-lock.json`。官方 0.3.10 可直接使用仓库根目录附带的清单。
 
 随附清单根据已安装的官方 0.3.10 完整 62 文件集生成，并与其中 `bundle.json` 的官方文件哈希逐项交叉校验。其他版本必须重新生成并复核清单；哈希校验不等同于代码签名或上游背书。

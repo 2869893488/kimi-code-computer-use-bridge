@@ -21,6 +21,17 @@
 - PowerShell 5.1 或 7
 - 用户自行安装的官方 KimiCU payload。仓库附带基于官方 0.3.10 本地安装生成的 `payload-lock.json`；哈希只证明文件集内容，不证明上游身份。其他版本必须自行生成并复核清单。
 
+## 获取官方组件
+
+需要区分两类官方组件，它们来源不同：
+
+- **Native runtime**（`kimi-cu.exe`）：由官方安装脚本 `https://cdn.kimi.com/kimi-computer-use-windows/latest/setup_windows.cmd` 装到 `%LOCALAPPDATA%\KimiCU`。该脚本**只安装 runtime**，不会产出下面的插件 payload；runtime 是 payload 运行的前提。
+- **插件 payload**（`-SourcePath` 指向的 62 个文件），二选一：
+  1. 已安装 Kimi Code：直接使用 `%USERPROFILE%\.kimi-code\plugins\managed\kimi-cu-win`（不要写入该目录，只读引用）。
+  2. 未安装 Kimi Code：从官方版本化地址下载并解压 `https://cdn.kimi.com/kimi-computer-use-windows/0.3.10/kimi-cu-win-plugin.zip`，解压前核对 ZIP 的 SHA-256 为 `aae21d2b5b8eb601f8f89b29e3ccc3ffab32db95f009a1e7e0a5409eefe4cea9`（取自官方 `0.3.10/version.json`）。
+
+仓库附带的 `payload-lock.json` 固定为官方 0.3.10。`latest` 会持续漂移（本说明撰写时 `latest/version.json` 已是 0.3.13，文件集相同但有 8 个文件哈希不同），直接使用最新版会在哈希校验处中止；使用 0.3.10 以外的版本必须自行生成并复核清单。
+
 ## 安装
 
 ```powershell
@@ -45,11 +56,13 @@ JSON 合并适配器覆盖 Antigravity、WorkBuddy 和 Claude Desktop。Antigrav
 
 ## 用 agent 安装
 
-把下面这段直接复制发给你的 agent，由它代你完成安装。前提是官方 KimiCU 已装在本机；本仓库不下载、不分发官方组件。
+把下面这段直接复制发给你的 agent，由它代你完成安装。前提是本机已有官方组件（获取方式见上文「获取官方组件」）；本仓库不下载、不分发官方组件。
 
 ```text
 帮我装 Kimi Code computer use 转接器：https://github.com/2869893488/kimi-code-computer-use-bridge
-前提是本机已装官方 KimiCU（没有先跑 https://cdn.kimi.com/kimi-computer-use-windows/latest/setup_windows.cmd）。
+前提：本机已有官方 KimiCU runtime（没有先跑 https://cdn.kimi.com/kimi-computer-use-windows/latest/setup_windows.cmd，它只装 runtime）
+和 kimi-cu-win 插件 payload（已装 Kimi Code 的在 %USERPROFILE%\.kimi-code\plugins\managed\kimi-cu-win；
+否则下载 https://cdn.kimi.com/kimi-computer-use-windows/0.3.10/kimi-cu-win-plugin.zip 解压，ZIP 的 SHA-256 应为 aae21d2b5b8eb601f8f89b29e3ccc3ffab32db95f009a1e7e0a5409eefe4cea9）。
 
 先问我：目标宿主（claude-desktop/workbuddy/antigravity/codex）、宿主配置绝对路径、官方 payload 目录、版本是否 0.3.10。
 
